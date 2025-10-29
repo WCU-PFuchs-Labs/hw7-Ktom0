@@ -1,4 +1,4 @@
-package binary;
+import binary.*;
 import java.util.Random;
 
 
