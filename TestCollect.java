@@ -1,4 +1,3 @@
-import binary.*;
 import java.util.Random;
 
 public class TestCollect {
