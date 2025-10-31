@@ -1,7 +1,6 @@
 import binary.*;
 import java.util.Random;
 
-
 public class GPTree {
     private final int numIndepVars;
     private final int maxDepth;
@@ -53,5 +52,18 @@ public class GPTree {
     @Override
     public String toString() {
         return (root == null) ? "(empty)" : root.toString();
+    }
+
+    public void traverse(Collector c) {
+        if (root != null && c != null) {
+            root.traverse(c);  
+        } 
+        else {
+            System.out.println("Warning: GPTree has no root or collector is null!");
+        }
+    }
+
+    public String getCrossNodes() {
+        return Collector.collectedString;
     }
 }
