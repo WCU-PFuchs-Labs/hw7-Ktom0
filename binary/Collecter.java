@@ -14,6 +14,12 @@ public class Collector {
         this.trees = new ArrayList<Node>();
     }
 
+    public void add(Node n) {
+        if (n != null) {
+            trees.add(n);
+        }
+    }
+    
     public void collect(int howMany, Random r) {
         if (r == null) r = new Random();
         int made = 0;
