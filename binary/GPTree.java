@@ -18,21 +18,22 @@ public class GPTree {
         if (depth <= 1) {
             return makeRandomLeaf();
         }
-        Node left = build(depth - 1);
-        Node right = build(depth - 1);
 
-        Binop op = randomOp();
+        Node left  = build(depth - 1);
+        Node right = build(depth - 1);
+        Binop op   = randomOp();
+
         return new Node(op, left, right);
     }
 
     private Node makeRandomLeaf() {
         boolean pickVar = rand.nextBoolean();
         if (pickVar && numIndepVars > 0) {
-            int idx = rand.nextInt(numIndepVars); 
+            int idx = rand.nextInt(numIndepVars);
             return new Node(new Variable(idx));
         } 
         else {
-            int n = rand.nextInt(20) + 1; 
+            int n = rand.nextInt(20) + 1;
             return new Node(new Const(n));
         }
     }
@@ -49,9 +50,10 @@ public class GPTree {
         return root;
     }
 
-   public void traverse() {
-        Collector.collectedString = "";    
-        Collector c = new Collector(numIndepVars, maxDepth);
+    public void traverse(Collector c) {
+        if (c == null) {
+            return;
+        }
         if (root != null) {
             root.traverse(c);
         }
