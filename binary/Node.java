@@ -5,7 +5,6 @@ public class Node implements Cloneable {
 
     private Node left;
     private Node right;
-
     private Op operation;
     protected int depth = 0;
 
@@ -34,8 +33,7 @@ public class Node implements Cloneable {
     public double eval(double[] values) {
         if (operation instanceof Unop) {
             Unop asUnop = (Unop) operation;
-            double answer = asUnop.eval(values);
-            return answer; 
+            return asUnop.eval(values);
         }
         else if (operation instanceof Binop) {
             Binop asBinop = (Binop) operation;
@@ -51,18 +49,16 @@ public class Node implements Cloneable {
             double rightValue = 0.0;
             if (right != null) {
                 rightValue = right.eval(values);
-            }
+            } 
             else {
                 rightValue = 0.0;
             }
 
-            double result = asBinop.eval(leftValue, rightValue);
-            return result;
+            return asBinop.eval(leftValue, rightValue);
         }
         else {
             System.err.println("Error: operation is not a Unop or a Binop!");
-            double fallback = 0.0;
-            return fallback;
+            return 0.0;
         }
     }
 
@@ -72,25 +68,9 @@ public class Node implements Cloneable {
             return operation.toString();
         }
         else if (operation instanceof Binop) {
-            String leftText;
-            if (left == null) {
-                leftText = "?";
-            } 
-            else {
-                leftText = left.toString();
-            }
-
-            String rightText;
-            if (right == null) {
-                rightText = "?";
-            } 
-            else {
-                rightText = right.toString();
-            }
-
-            String middle = operation.toString();
-            String finalText = "(" + leftText + " " + middle + " " + rightText + ")";
-            return finalText;
+            String leftText  = (left  == null) ? "?" : left.toString();
+            String rightText = (right == null) ? "?" : right.toString();
+            return "(" + leftText + " " + operation.toString() + " " + rightText + ")";
         }
         else {
             return "(error)";
@@ -98,12 +78,15 @@ public class Node implements Cloneable {
     }
 
     public void traverse(Collector c) {
-        c.collect(this);
+        if (c == null) {
+            return;
+        }
+
+        c.add(this);
 
         if (left != null) {
             left.traverse(c);
         }
-
         if (right != null) {
             right.traverse(c);
         }
@@ -122,12 +105,7 @@ public class Node implements Cloneable {
     }
 
     public boolean isLeaf() {
-        if (operation instanceof Unop) {
-            return true;
-        } 
-        else {
-            return false;
-        }
+        return (operation instanceof Unop);
     }
 
     public void addRandomKids(NodeFactory nf, int maxDepth, Random rand) {
@@ -142,18 +120,16 @@ public class Node implements Cloneable {
             Node rightTerminal = nf.getTerminal(rand);
             rightTerminal.depth = this.depth + 1;
             this.right = rightTerminal;
-
             return;
         }
 
         int totalChoicesLeft = nf.getNumOps() + nf.getNumIndepVars();
-        int pickLeft = rand.nextInt(totalChoicesLeft); 
+        int pickLeft = rand.nextInt(totalChoicesLeft);
 
         if (pickLeft < nf.getNumOps()) {
             Node leftOperator = nf.getOperator(rand);
             leftOperator.depth = this.depth + 1;
             this.left = leftOperator;
-
             this.left.addRandomKids(nf, maxDepth, rand);
         } 
         else {
@@ -169,7 +145,6 @@ public class Node implements Cloneable {
             Node rightOperator = nf.getOperator(rand);
             rightOperator.depth = this.depth + 1;
             this.right = rightOperator;
-
             this.right.addRandomKids(nf, maxDepth, rand);
         } 
         else {
@@ -181,10 +156,9 @@ public class Node implements Cloneable {
 
     @Override
     public Object clone() {
-        Object raw = null;
-
+        Object raw;
         try {
-            raw = super.clone();    
+            raw = super.clone();
         } 
         catch (CloneNotSupportedException e) {
             System.out.println("Node can't clone.");
@@ -202,16 +176,14 @@ public class Node implements Cloneable {
         }
 
         if (this.left != null) {
-            Node leftCopy = (Node) this.left.clone();
-            copy.left = leftCopy;
+            copy.left = (Node) this.left.clone();
         } 
         else {
             copy.left = null;
         }
 
         if (this.right != null) {
-            Node rightCopy = (Node) this.right.clone();
-            copy.right = rightCopy;
+            copy.right = (Node) this.right.clone();
         } 
         else {
             copy.right = null;
