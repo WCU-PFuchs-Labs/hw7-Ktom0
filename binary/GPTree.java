@@ -62,6 +62,17 @@ public class GPTree {
         return root;
     }
 
+    public void traverse() {
+        Collector c = new Collector(numIndepVars, maxDepth);
+        if (root != null) {
+            root.traverse(c);
+            lastTraverseText = "Visited " + c.size() + " nodes";
+        } 
+        else {
+            lastTraverseText = "(empty tree)";
+        }
+    }
+    
     public void traverse(Collector c) {
         if (c == null) {
             return;
