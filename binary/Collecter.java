@@ -19,6 +19,11 @@ public class Collector {
     public void add(Node n) {
         if (n != null) {
             trees.add(n);
+
+            if (collectedString == null) {
+                collectedString = "";
+            }
+            collectedString = collectedString + n.toString() + " ";
         }
     }
     
