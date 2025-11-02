@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Collector {
+    public static String collectedString = "";
+    
     private final int numIndepVars;
     private final int maxDepth;
     private final ArrayList<Node> trees;
