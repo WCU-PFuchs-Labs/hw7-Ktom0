@@ -1,33 +1,26 @@
-import binary.*;        
-import java.util.ArrayList;
+import binary.*;
 import java.util.Random;
 
 public class TestGPTree {
     public static void main(String[] args) {
-        double[] valuesA = {1.0, 2.0, 3.0};
-        double[] valuesB = {2.0, 1.0, 0.0};
 
-        int numIndepVars = 3; 
+        Binop[] ops = { new Plus(), new Minus(), new Mult(), new Divide() };
+        int numIndepVars = 3;
+        NodeFactory nf = new NodeFactory(ops, numIndepVars);
+
+        Random r = new Random();
+
         int maxDepth = 3;
-        int howMany = 2;   
 
-        Random rng = new Random();
+        GPTree t1 = new GPTree(nf, maxDepth, r);
+        GPTree t2 = new GPTree(nf, maxDepth, r);
 
-        Collector collector = new Collector(numIndepVars, maxDepth);
-        collector.collect(howMany, rng);
+        Collector c1 = new Collector(numIndepVars, maxDepth);
+        t1.traverse(c1);
 
-        ArrayList<Node> trees = collector.getTrees();
+        Collector c2 = new Collector(numIndepVars, maxDepth);
+        t2.traverse(c2);
 
-        for (int i = 0; i < trees.size(); i++) {
-            Node expr = trees.get(i);
-
-            System.out.println("When {X0,X1,X2} = {" + valuesA[0] + "," + valuesA[1] + "," + valuesA[2] + "}:");
-            System.out.println(expr.toString() + " = " + expr.eval(valuesA));
-            System.out.println();
-
-            System.out.println("When {X0,X1,X2} = {" + valuesB[0] + "," + valuesB[1] + "," + valuesB[2] + "}:");
-            System.out.println(expr.toString() + " = " + expr.eval(valuesB));
-            System.out.println();
-        }
+        System.out.println("After crossover");
     }
 }
