@@ -1,5 +1,4 @@
-  package binary;
-
+package binary;
 import java.util.Random;
 
 public class GPTree {
