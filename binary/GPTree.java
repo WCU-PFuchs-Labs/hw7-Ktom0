@@ -19,15 +19,12 @@ public class GPTree {
     public GPTree(NodeFactory factory, int maxDepth, Random rand) {
         this.maxDepth = Math.max(1, maxDepth);
         this.rand = (rand == null) ? new Random() : rand;
-
         this.numIndepVars = factory.getNumIndepVars();
 
-        Node rootOp = factory.getOperator(this.rand);
-        rootOp.depth = 0;
-
-        rootOp.addRandomKids(factory, this.maxDepth, this.rand);
-
-        this.root = rootOp;
+        Node opRoot = factory.getOperator(this.rand);
+        opRoot.depth = 0;
+        opRoot.addRandomKids(factory, this.maxDepth, this.rand);
+        this.root = opRoot;
     }
 
         private Node build(int depth) {
@@ -38,7 +35,6 @@ public class GPTree {
         Node left = build(depth - 1);
         Node right = build(depth - 1);
         Binop op = randomOp();
-
         return new Node(op, left, right);
     }
 
