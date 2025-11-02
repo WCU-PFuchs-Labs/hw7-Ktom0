@@ -1,7 +1,9 @@
-package binary;
+  package binary;
+
 import java.util.Random;
 
 public class GPTree {
+
     private final int numIndepVars;
     private final int maxDepth;
     private final Random rand;
@@ -16,24 +18,26 @@ public class GPTree {
 
     public GPTree(NodeFactory factory, int maxDepth, Random rand) {
         this.maxDepth = Math.max(1, maxDepth);
-        this.rand = (rand == null) ? new Random(): rand;
+        this.rand = (rand == null) ? new Random() : rand;
+
         this.numIndepVars = factory.getNumIndepVars();
 
         Node rootOp = factory.getOperator(this.rand);
         rootOp.depth = 0;
+
         rootOp.addRandomKids(factory, this.maxDepth, this.rand);
 
         this.root = rootOp;
     }
 
-    private Node build(int depth) {
+        private Node build(int depth) {
         if (depth <= 1) {
             return makeRandomLeaf();
         }
 
-        Node left  = build(depth - 1);
+        Node left = build(depth - 1);
         Node right = build(depth - 1);
-        Binop op   = randomOp();
+        Binop op = randomOp();
 
         return new Node(op, left, right);
     }
@@ -61,18 +65,17 @@ public class GPTree {
     public Node getRoot() {
         return root;
     }
-
+    
     public void traverse() {
+        Collector.collectedString = "";
+
         Collector c = new Collector(numIndepVars, maxDepth);
+
         if (root != null) {
             root.traverse(c);
-            lastTraverseText = "Visited " + c.size() + " nodes";
-        } 
-        else {
-            lastTraverseText = "(empty tree)";
         }
     }
-    
+
     public void traverse(Collector c) {
         if (c == null) {
             return;
