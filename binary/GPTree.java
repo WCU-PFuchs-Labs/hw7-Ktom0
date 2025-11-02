@@ -49,21 +49,20 @@ public class GPTree {
         return root;
     }
 
-    @Override
-    public String toString() {
-        return (root == null) ? "(empty)" : root.toString();
-    }
-
-    public void traverse(Collector c) {
-        if (root != null && c != null) {
-            root.traverse(c);  
-        } 
-        else {
-            System.out.println("Warning: GPTree has no root or collector is null!");
+   public void traverse() {
+        Collector.collectedString = "";    
+        Collector c = new Collector(numIndepVars, maxDepth);
+        if (root != null) {
+            root.traverse(c);
         }
     }
 
     public String getCrossNodes() {
         return Collector.collectedString;
+    }
+
+    @Override
+    public String toString() {
+        return (root == null) ? "(empty)" : root.toString();
     }
 }
