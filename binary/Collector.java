@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Collector {
-
     public static String collectedString = "";
 
     private final int numIndepVars;
@@ -27,13 +26,13 @@ public class Collector {
 
         Op op = n.getOperation();
         if (op instanceof Binop) {
-            trees.add(n);
-
-            if (!collectedString.isEmpty()) {
+            if (collectedString.length() > 0) {
                 collectedString = collectedString + " ";
             }
             collectedString = collectedString + op.toString();
         }
+
+        trees.add(n);
     }
 
     public void collect(int howMany, Random r) {
