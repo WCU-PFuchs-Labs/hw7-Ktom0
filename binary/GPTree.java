@@ -2,7 +2,6 @@ package binary;
 import java.util.Random;
 
 public class GPTree {
-
     private final int numIndepVars;
     private final int maxDepth;
     private final Random rand;
@@ -15,7 +14,7 @@ public class GPTree {
         this.root = build(this.maxDepth);
     }
 
-     public GPTree(NodeFactory factory, int maxDepth, Random rand) {
+    public GPTree(NodeFactory factory, int maxDepth, Random rand) {
         this.maxDepth = Math.max(1, maxDepth);
         this.rand = (rand == null) ? new Random() : rand;
         this.numIndepVars = factory.getNumIndepVars();
@@ -62,7 +61,6 @@ public class GPTree {
 
     public void traverse() {
         Collector.clearCollected();
-
         Collector c = new Collector(numIndepVars, maxDepth);
         if (root != null) {
             root.traverse(c);
