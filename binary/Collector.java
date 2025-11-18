@@ -27,7 +27,7 @@ public class Collector {
         if (op instanceof Binop) {
             binops.add((Binop) op);
 
-            if (collectedString.length() > 0) collectedString += " ";
+            if (collectedString.length() > 0) collectedString += ";";
             collectedString += op.toString();   
         }
     }
